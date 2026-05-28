@@ -20,6 +20,26 @@ class BloomFilter:
         return True
 
 
+def check_password_uniqueness(bloom, passwords):
+    """
+    Перевіряє унікальність паролів за допомогою фільтра Блума.
+
+    Args:
+        bloom: екземпляр BloomFilter
+        passwords: список паролів для перевірки
+
+    Returns:
+        словник {пароль: статус} де статус - "унікальний" або "вже використаний"
+    """
+    results = {}
+    for password in passwords:
+        if bloom.contains(password):
+            results[password] = "вже використаний"
+        else:
+            results[password] = "унікальний"
+    return results
+
+
 if __name__ == "__main__":
     # Ініціалізація фільтра Блума
     bloom = BloomFilter(size=1000, num_hashes=3)
